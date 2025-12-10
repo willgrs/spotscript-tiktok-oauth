@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok OAuth Redirect</title>
+    <script>
+        // Get the code and state from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const state = urlParams.get('state');
+        const error = urlParams.get('error');
+        const errorDescription = urlParams.get('error_description');
+        
+        // Build the redirect URL to the app
+        if (code && state) {
+            // Success: redirect to app with code and state
+            const appURL = `com.SpotScriptAI.SpotScript://tiktok-oauth?code=${encodeURIComponent(code)}&state=${encodeURIComponent(state)}`;
+            window.location.href = appURL;
+        } else if (error) {
+            // Error: redirect to app with error
+            const appURL = `com.SpotScriptAI.SpotScript://tiktok-oauth?error=${encodeURIComponent(error)}&error_description=${encodeURIComponent(errorDescription || '')}`;
+            window.location.href = appURL;
+        } else {
+            // Fallback: redirect to app
+            window.location.href = 'com.SpotScriptAI.SpotScript://tiktok-oauth';
+        }
+    </script>
+</head>
+<body>
+    <p>Redirecting to SpotScript...</p>
+    <p>If you are not redirected, <a href="com.SpotScriptAI.SpotScript://tiktok-oauth">click here</a>.</p>
+</body>
+</html>
+
